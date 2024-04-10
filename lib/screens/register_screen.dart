@@ -1,28 +1,30 @@
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:progmob_1/constants/app_colors.dart';
 import 'package:progmob_1/constants/text_sizes.dart';
 import 'package:progmob_1/widgets/glass_container.dart';
 import 'package:progmob_1/widgets/password_input.dart';
 import 'package:progmob_1/widgets/text_input.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  late bool? _rememberMe = false;
 
   Map<String, dynamic> get data {
     return {
+      'full_name': _fullNameController.text,
       'email': _emailController.text,
       'password': _passwordController.text,
-      'remember_me': _rememberMe,
     };
   }
 
@@ -88,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       // Greeting
                       const Text(
-                        'Hello Again!',
+                        'Welcome!',
                         style: TextStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w700,
@@ -109,6 +111,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 64.0,
                       ),
 
+                      // Full Name Input Field
+                      TextInput(
+                        hintText: 'Full Name',
+                        type: TextInputType.name,
+                        controller: _fullNameController,
+                      ),
+                      const SizedBox(
+                        height: 16.0,
+                      ),
+
                       // Email Input Field
                       TextInput(
                         hintText: 'Email',
@@ -125,39 +137,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: _passwordController,
                       ),
 
-                      // Remember Me Checkbox
-                      Transform.translate(
-                        offset: const Offset(-20.0, 0.0),
-                        child: CheckboxListTile(
-                          checkColor: AppColors.primary,
-                          fillColor: MaterialStateProperty.all<Color>(
-                            AppColors.base100,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          side: BorderSide(
-                            color: AppColors.white.withOpacity(0.0),
-                          ),
-                          title: Transform.translate(
-                            offset: const Offset(-16.0, 0.0),
-                            child: const Text(
-                              'Remember me',
-                              style: TextStyle(
-                                fontSize: TextSizes.secondary,
-                                color: AppColors.black,
-                              ),
-                            ),
-                          ),
-                          value: _rememberMe,
-                          onChanged: (value) {
-                            setState(() {
-                              _rememberMe = value;
-                            });
-                          },
-                          controlAffinity: ListTileControlAffinity.leading,
-                        ),
-                      ),
                       const SizedBox(
                         height: 16.0,
                       ),
@@ -183,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         child: const Center(
                           child: Text(
-                            'Sign In',
+                            'Register',
                             style: TextStyle(
                               color: AppColors.primaryContent,
                               fontSize: TextSizes.body,
@@ -200,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Center(
                         child: RichText(
                           text: TextSpan(
-                            text: 'Don\'t have an account? ',
+                            text: 'Have an account? ',
                             style: const TextStyle(
                               color: AppColors.black,
                               fontFamily: 'Poppins',
@@ -210,14 +189,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               WidgetSpan(
                                 child: GestureDetector(
                                   child: const Text(
-                                    'Register Now',
+                                    'Log In',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                       color: AppColors.primary,
                                     ),
                                   ),
                                   onTap: () {
-                                    Navigator.pushNamed(context, '/register');
+                                    Navigator.pushNamed(context, '/login');
                                   },
                                 ),
                               ),
